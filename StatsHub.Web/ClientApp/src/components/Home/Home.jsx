@@ -1,4 +1,6 @@
 import React from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useRevenueStats } from '../../hooks/useRevenueStats';
 import { RevenueChart } from '../RevenueChart/RevenueChart';
 import { Loader } from '../Loader/Loader';
@@ -18,7 +20,7 @@ export const Home = () => {
         const newOrder = {
             orderId: crypto.randomUUID(),
             sku: 'SKU-' + Math.floor(Math.random() * 10000),
-            price: 1000,
+            price: 10000,
             quantity: 1,
             createdAt: randomDay,
             brandName: 'TestBrand'
@@ -31,9 +33,14 @@ export const Home = () => {
                 body: JSON.stringify([newOrder])
             });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+            toast.success(
+                `Добавлено 1 заказ на ${new Date(randomDay).toLocaleDateString()}. Смотрите график!`,
+                { autoClose: 5000 }
+            );
         } catch (err) {
             console.error('Sync failed:', err);
-            alert('Не удалось добавить заказ');
+            toast.error('Не удалось добавить заказ');
         }
     };
 
@@ -41,20 +48,23 @@ export const Home = () => {
     if (error) return <div className="error">Error: {error.message}</div>;
 
     return (
-        <main className="revenue-page">
-            <h1 className="revenue-title">📈 Daily Revenue</h1>
-            <div className="revenue-chart-wrapper">
-                <RevenueChart stats={stats} />
-            </div>
+        <>
+            <main className="revenue-page">
+                <h1 className="revenue-title">📈 Daily Revenue</h1>
+                <div className="revenue-chart-wrapper">
+                    <RevenueChart stats={stats} />
+                </div>
 
-            <section className="try-section">
-                <p className="try-text">
-                    Добавляйте новые заказы — они появятся на графике в реальном времени!
-                </p>
-                <button className="try-button" onClick={handleTryIt}>
-                    Try It
-                </button>
-            </section>
-        </main>
+                <section className="try-section">
+                    <p className="try-text">
+                        Добавляйте новые заказы — они появятся на графике в реальном времени!
+                    </p>
+                    <button className="try-button" onClick={handleTryIt}>
+                        Try It
+                    </button>
+                </section>
+            </main>
+            <ToastContainer />
+        </>
     );
 };
