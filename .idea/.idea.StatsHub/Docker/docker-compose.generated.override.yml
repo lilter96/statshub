@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  api:
+    build:
+      context: "D:\\Work\\StatsHub\\StatsHub.Web"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/StatsHub.Web.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "statshub.web:dev"
+    ports: []
+    volumes:
+    - "D:\\Work\\StatsHub\\StatsHub.Web:/app:rw"
+    - "D:\\Work\\StatsHub:/src:rw"
+    - "C:\\Users\\Терентий Гацуков\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"
