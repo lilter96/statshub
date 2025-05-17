@@ -15,14 +15,26 @@ export const Home = () => {
     const handleTryIt = async () => {
         if (!stats.length) return;
 
-        const randomDay = stats[Math.floor(Math.random() * stats.length)].date;
+        let createdAt;
+        if (!stats.length) {
+            createdAt = new Date().toISOString();
+        } else {
+            const rnd = stats[Math.floor(Math.random() * stats.length)].date;
+            const dt = new Date(rnd);
+            dt.setDate(dt.getDate() + 5);
+            createdAt = dt.toISOString();
+        }
+
+        const revenues = stats.map(x => x.revenue);
+        const maxRevenue = revenues.length ? Math.max(...revenues) : 0;
+        const price = maxRevenue ? Math.ceil(maxRevenue * 0.25) : 1000;
 
         const newOrder = {
             orderId: crypto.randomUUID(),
             sku: 'SKU-' + Math.floor(Math.random() * 10000),
-            price: 10000,
+            price,
             quantity: 1,
-            createdAt: randomDay,
+            createdAt,
             brandName: 'TestBrand'
         };
 
@@ -35,7 +47,7 @@ export const Home = () => {
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
             toast.success(
-                `Добавлено 1 заказ на ${new Date(randomDay).toLocaleDateString()}. Смотрите график!`,
+                `Добавлено 1 заказ на ${new Date(createdAt).toLocaleDateString()}. Смотрите график!`,
                 { autoClose: 5000 }
             );
         } catch (err) {
