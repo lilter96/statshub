@@ -24,14 +24,14 @@ public sealed class SyncOrdersCommandHandler : IRequestHandler<SyncOrdersCommand
 
     public async Task<int> Handle(SyncOrdersCommand request, CancellationToken ct)
     {
-        var incoming = request.Orders
+            var incoming = request.Orders
             .Select(o => new Order
             {
                 OrderId = o.OrderId,
                 Sku = o.Sku,
                 Price = o.Price,
                 Quantity = o.Quantity,
-                CreatedAt = o.CreatedAt,
+                CreatedAt = DateTime.SpecifyKind(o.CreatedAt, DateTimeKind.Utc),
                 BrandName = o.BrandName
             })
             .ToList();

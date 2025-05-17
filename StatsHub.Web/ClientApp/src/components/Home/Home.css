@@ -54,3 +54,34 @@
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+.try-section {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.try-text {
+    color: #aaa;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.try-button {
+    padding: 0.6rem 1.2rem;
+    background: #4ade80;
+    border: none;
+    border-radius: 6px;
+    color: #1f2937;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.try-button:hover {
+    background: #22c55e;
+    transform: translateY(-1px);
+}
+
+.try-button:active {
+    transform: translateY(0);
+}
