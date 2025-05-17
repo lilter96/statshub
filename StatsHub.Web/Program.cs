@@ -13,7 +13,8 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<StatsHubDbContext>(o => o.UseNpgsql(connectionString));
-builder.Services.AddMemoryCache();
+
+builder.Services.AddScoped<ICacheInvalidationService, CacheInvalidationService>();
 
 builder.Services.AddMediatR(cfg =>
 {

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Moq;
 using StatsHub.Application.Handlers;
 using StatsHub.Application.Queries;
 using StatsHub.Domain.Entities;
@@ -34,7 +36,7 @@ public class BrandRevenueQueryHandlerTests
 
         await db.SaveChangesAsync();
 
-        var handler = new BrandRevenueQueryHandler(db, CreateInMemoryDistributedCache());
+        var handler = new BrandRevenueQueryHandler(db, CreateInMemoryDistributedCache(), Mock.Of<ILogger<BrandRevenueQueryHandler>>());
 
         var result = await handler.Handle(new BrandRevenueQuery(), CancellationToken.None);
 
