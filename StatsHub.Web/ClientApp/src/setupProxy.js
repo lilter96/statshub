@@ -22,7 +22,7 @@ module.exports = function (app) {
     };
 
     app.use(
-        ['/orders'],
+        ['/orders', '/negotiate'],
         createProxyMiddleware(apiProxyOptions)
     );
 };
